@@ -1,0 +1,21 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  simple_deployment_pipeline:
+    runs-on: ubuntu-18.04
+    steps:
+      # uses 关键字告诉工作流程运行特定的操作
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        # with 关键字用于为动作提供一个“参数”
+        with:
+          node-version: '12.x'
+      - name: npm install
+        run: npm install
+      - name: lint
+        run: npm run eslint

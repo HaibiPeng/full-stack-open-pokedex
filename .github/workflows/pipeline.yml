@@ -14,7 +14,7 @@ jobs:
       - uses: actions/setup-node@v1
         # with 关键字用于为动作提供一个“参数”
         with:
-          node-version: '12.x'
+          node-version: '14.x'
       - name: npm install
         run: npm install
       - name: lint

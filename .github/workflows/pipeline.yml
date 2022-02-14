@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize]
 
 jobs:
   simple_deployment_pipeline:
@@ -39,10 +42,19 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: 'patch'
           DRY_RUN: true
-      - name: Telegram notifications
+      - name: Telegram success notifications
         if: ${{ job.status == 'success' && !contains(join(github.event.commits.*.message), '#skip') }}
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          args: A new version has been deployed to https://pokemon-hb.herokuapp.com/
+          args: A new release has been deployed to https://pokemon-hb.herokuapp.com/
+      - name: Telegram failure notifications
+        if: ${{ failure() }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO_ }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message:
+            GitHub Actions failed on ${{ github.event_name }} to ${{ github.repository }}.
+            Commit ${{ github.sha }} by ${{ github.actor }}.

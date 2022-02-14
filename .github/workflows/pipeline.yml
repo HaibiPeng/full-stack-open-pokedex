@@ -28,8 +28,7 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP }}
           HEROKU_EMAIL: haibi.peng@aalto.fi
-          healthcheck: "https://${{ secrets.HEROKU_APP }}.herokuapp.com/health"
-          checkstring: "ok"
-          delay: 5
-          rollbackonhealthcheckfailed: true
-          
+          # healthcheck: "https://${{ secrets.HEROKU_APP }}.herokuapp.com/health"
+          # checkstring: "ok"
+          # delay: 5
+          # rollbackonhealthcheckfailed: true
